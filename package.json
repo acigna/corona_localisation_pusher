@@ -1,0 +1,10 @@
+{
+	"name": "subseax-rt-comm",
+	"version": "0.1.0",
+	"dependencies": {
+		"autobahn": "19.*",
+		"autobahn-browser": "19.*",
+		"@elastic/elasticsearch": "7.*",
+		"moment": "2.24.0"
+	}
+}
