@@ -1,0 +1,13 @@
+{
+	"node": "node_name",
+	"auth": {
+		"username": "username",
+        "password": "password"
+	},
+	"concurrent_number": 1,
+	"index": "demo236",
+	"bulk_size": 100,
+	"mappings": {
+
+    }
+}
