@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pushing Localisation Data</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autobahn-browser@20.2.2/autobahn.js"></script>
+	<script type="text/javascript" src="autobahn_config.js"></script>
+</head>
+<body>
+<label>Identite : <input type="text" name="identite" id="identite"></label>
+<button id="push">Push Localisation</button>
+<p id="localisation_information">
+	Not pushing yet
+</p>
+
+<script type="text/javascript">
+
+function triggerWatchPosition ( session, identity ) {
+	function geo_success(position) {
+  		document.getElementById("localisation_information").innerHTML = "Pushing Localisation Data : " + (position.coords.latitude +  " " + position.coords.longitude);
+  		console.log(position.coords.latitude, position.coords.longitude)
+  		var latitude = position.coords.latitude,
+  			longitude = position.coords.longitude;
+  		session.publish("new_position", [{identity: identity, latitude: latitude, longitude: longitude}]);
+	}
+
+	function geo_error() {
+  	alert("Sorry, no position available.");
+	}
+
+	var geo_options = {
+ 	    enableHighAccuracy: true, 
+  		maximumAge        : 30000, 
+  	    timeout           : 27000
+	};
+
+	var wpid = navigator.geolocation.watchPosition(geo_success, geo_error, geo_options);
+}
+
+var identity = localStorage.getItem('identity');
+var data_capture = false;
+
+if( identity ) {
+	document.getElementById('identite').value = identity;
+}
+
+document.getElementById('push').addEventListener('click', function () {
+	console.log(document.getElementById('identite').value)
+	if( identity ) {
+		identity = document.getElementById('identite').value;
+		localStorage.setItem( 'identity', identity );
+	} else {
+		identity = document.getElementById('identite').value;
+		localStorage.setItem( 'identity', identity );
+	}
+
+	var connection = new autobahn.Connection({
+ 		url: autobahn_config.ws_url,
+ 	 	realm: autobahn_config.realm
+	});
+	connection.open();
+	connection.onopen = function ( session ) {
+		triggerWatchPosition ( session, identity );
+	};
+});
+
+
+</script>
+</body>
+</html>
