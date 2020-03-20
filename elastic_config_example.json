@@ -8,6 +8,16 @@
 	"index": "demo236",
 	"bulk_size": 100,
 	"mappings": {
-
+		"properties": {
+			"identity": {
+				"type": "text"
+			},
+			"infected": {
+				"type": "boolean"
+			},
+			"position": {
+				"type": "geo_point"
+			}
+		}
     }
 }
