@@ -34,7 +34,7 @@ launchCreateIndexPromise.then(function (){
       //Show it as ann error to be visible in the console
 			console.error( data[0] );
 			var position_data = data[0];
-			client.create({id: uuidv4(), index: elasticsearch_config.index, body: { position: {lat: position_data.latitude, lon: position_data.longitude}, infected: false, time: moment().format("YYYY-MM-DD"), identity: position_data.identity}})
+			client.create({id: uuidv4(), index: elasticsearch_config.index, body: { position: {lat: position_data.latitude, lon: position_data.longitude}, infected: false, time: moment().format(), identity: position_data.identity}})
 			.then(function ( ){  console.log('success');}, function ( e ) {
 				console.error( JSON.stringify(e) );
 			});
